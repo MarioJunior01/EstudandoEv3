@@ -1,7 +1,5 @@
 from pybricks.hubs import EV3Brick
 from ev3dev2.motor import *
-from ev3dev2.sound import Sound
-from ev3dev2.button import Button
 from ev3dev2.sensor import *
 from ev3dev2.sensor.lego import *
 from ev3dev2.sensor.virtual import *
