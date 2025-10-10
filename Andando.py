@@ -25,9 +25,9 @@ while True:
           motorA.stop()
           motorB.stop()
           ev3.screen.print("Objeto na frente ")
-          ev3.speaker.beep(200, 200)  # tom grave prolongado de 600 ms
+          ev3.speaker.beep(570, 600)  
           wait(100)
-          ev3.speaker.beep(100, 400) 
+          ev3.speaker.beep(410, 400) 
           break
       else:
          motorA.run(500)
