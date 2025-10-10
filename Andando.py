@@ -1,37 +1,41 @@
+#!/usr/bin/env pybricks-micropython
 from pybricks.hubs import EV3Brick
-from ev3dev2.motor import *
-from ev3dev2.sensor import *
-from ev3dev2.sensor.lego import *
-from ev3dev2.sensor.virtual import *
-from pybricks.ev3devices import Motor,UltrasonicSensor
-from pybricks.tools import wait
-from pybricks.parameters import *
-from pybricks.robotics import *
-
+from pybricks.ev3devices import (Motor, TouchSensor, ColorSensor,
+                                 InfraredSensor, UltrasonicSensor, GyroSensor)
+from pybricks.parameters import Port, Stop, Direction, Button, Color
+from pybricks.tools import wait, StopWatch, DataLog
+from pybricks.robotics import DriveBase
+from pybricks.media.ev3dev import SoundFile, ImageFile
 
 ev3 = EV3Brick()
-motorA = Motor(OUTPUT_A)
-motorB = Motor(OUTPUT_B)
-sensor_Ur = UltrasonicSensor(Port.S2)
+motorA = Motor(Port.C)
+motorB = Motor(Port.B)
+sensor_Ir = InfraredSensor(Port.S3)
 
 tempo = 0
 
+
 while True:
-      distancia = sensor_Ur.distance() / 10
+      distancia = sensor_Ir.distance()
       print(distancia)
       
-      if distancia < 10:
+      if distancia < 20:
           wait(100)
-          motorA.stop()
+          
           motorB.stop()
+          
           ev3.screen.print("Objeto na frente ")
-          ev3.speaker.beep(570, 600)  
+          ev3.speaker.beep(570)  
           wait(100)
-          ev3.speaker.beep(410, 400) 
-          break
+          ev3.speaker.beep(410)
+          motorB.stop()
+
+
+
+      
       else:
-         motorA.run(500)
-         motorB.run(500)
+         motorA.run(200)
+         motorB.run(200)
         
       if tempo == 9000:
          ev3.screen.print("------>")
@@ -39,16 +43,9 @@ while True:
         
       if tempo == 15000:
          motorB.stop()
-         ev3.screen.print("------>")
+         ev3.screen.print("<------")
         
-      if tempo == 20000:
-         motorA.stop()
-         motorB.stop()
-         ev3.speaker.beep(500, 200)  
-         wait(100)
-         ev3.speaker.beep(200, 400)
-         ev3.screen.print("---Fim----")
-         break
+       
         
       tempo = tempo+1000
       wait(1000)
