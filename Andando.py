@@ -21,14 +21,13 @@ while True:
       
       if distancia < 20:
           wait(100)
-          
-          motorB.stop()
-          
+          motorB.run(-300)
+          wait(500)
+          motorA.stop()
           ev3.screen.print("Objeto na frente ")
           ev3.speaker.beep(570)  
           wait(100)
           ev3.speaker.beep(410)
-          motorB.stop()
 
 
 
