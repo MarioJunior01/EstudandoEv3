@@ -1,58 +1,61 @@
-#!/usr/bin/env pybricks-micropython
+#!/usr/bin/env python3
+
+# Import the necessary libraries
+import math
+import time
+from pybricks.ev3devices import *
+from pybricks.parameters import *
+from pybricks.robotics import *
+from pybricks.tools import wait
 from pybricks.hubs import EV3Brick
-from pybricks.ev3devices import (Motor, TouchSensor, ColorSensor,
-                                InfraredSensor, UltrasonicSensor, GyroSensor)
-from pybricks.parameters import Port, Stop, Direction, Button, Color
-from pybricks.tools import wait, StopWatch, DataLog
-from pybricks.robotics import DriveBase
-from pybricks.media.ev3dev import SoundFile, ImageFile
 
 ev3 = EV3Brick()
-motorA = Motor(Port.C)
+motorA = Motor(Port.A)
 motorB = Motor(Port.B)
-sensor_Ir = InfraredSensor(Port.S3)
-sensor_colorA = ColorSensor(Port.S1)
-sensor_colorB = ColorSensor(Port.S2)
-COR_PARAR = Color.BLACK 
+left_motor = motorA
+right_motor = motorB
+robot = DriveBase(left_motor, right_motor, wheel_diameter=56, axle_track=152)
+robot.settings(straight_speed=200, straight_acceleration=100, turn_rate=100)
+ 
+sensor_cor = ColorSensor(Port.S1)
+sensor_Ir = UltrasonicSensor(Port.S2)
 
+def andar():
+     motorA.run(600)
+     motorB.run(600)
+     return True
 
-def  bool andar ():
- motorA.run(300)
- motorB.run(300)
-  return True
+def parar():
+     motorA.stop()
+     motorB.stop()
+     return True
 
-def bool  parar() :
-   motorA.stop()  
-   motorB.stop()
-  return True
+def virarDireita(ativo):
+      ativo = ativo
+      motorA.run(-300)  
+      return ativo
 
-def bool  virarDireita():
-   motorA.run(-300)  
-    return True
-
- def  bool virarEsquerda():
-    motorB.run(-300)
-   return True
+def virarEsquerda(ativo):
+      ativo = ativo
+      motorB.run(-300)
+      return ativo
 
 
 while True:
-    andar()
+     andar()
+     ativo= True
      distancia = sensor_Ir.distance()
-    cor = sensor_colorA.color()
-
-    if cor == COR_PARAR :
-        ev3.screen.draw_text(0, 40, "Color BLACK ")
-        ev3.screen.draw_text(0, 60, "Parando ")
-         parar()
-        ev3.speaker.beep(300,400)
-        break
-
-
-     if distancia <= 20:
-       wait(100)
-      virarDireita()
-         if virarDireita()== True:
-           wait(200)
-           virarEsquerda()
+     print(distancia)
+    
+     
+     if distancia < 30:
+          wait(100)
+          virarDireita(ativo)
+         # if virarDireita(ativo)==True:
+          #   wait(200)
+           #  virarEsquerda(ativo)
   
 wait(100)
+# Here is where your code starts
+
+
