@@ -14,20 +14,45 @@ sensor_Ir = InfraredSensor(Port.S3)
 sensor_colorA = ColorSensor(Port.S1)
 sensor_colorB = ColorSensor(Port.S2)
 COR_PARAR = Color.BLACK 
-motorA.run(300)
-motorB.run(300)
-while True:
 
+
+def  bool andar ():
+ motorA.run(300)
+ motorB.run(300)
+  return True
+
+def bool  parar() :
+   motorA.stop()  
+   motorB.stop()
+  return True
+
+def bool  virarDireita():
+   motorA.run(-300)  
+    return True
+
+ def  bool virarEsquerda():
+    motorB.run(-300)
+   return True
+
+
+while True:
+    andar()
+     distancia = sensor_Ir.distance()
     cor = sensor_colorA.color()
 
     if cor == COR_PARAR :
         ev3.screen.draw_text(0, 40, "Color BLACK ")
         ev3.screen.draw_text(0, 60, "Parando ")
-        motorA.stop()  
-        motorB.stop()
+         parar()
         ev3.speaker.beep(300,400)
         break
-              
-           
+
+
+     if distancia <= 20:
+       wait(100)
+      virarDireita()
+         if virarDireita()== True:
+           wait(200)
+           virarEsquerda()
   
 wait(100)
