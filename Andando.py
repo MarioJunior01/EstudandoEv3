@@ -1,61 +1,65 @@
-#!/usr/bin/env python3
-
-# Import the necessary libraries
-import math
-import time
-from pybricks.ev3devices import *
-from pybricks.parameters import *
-from pybricks.robotics import *
-from pybricks.tools import wait
+#!/usr/bin/env pybricks-micropython
 from pybricks.hubs import EV3Brick
+from pybricks.ev3devices import (Motor, TouchSensor, ColorSensor,
+                                 InfraredSensor, UltrasonicSensor, GyroSensor)
+from pybricks.parameters import Port, Stop, Direction, Button, Color
+from pybricks.tools import wait, StopWatch, DataLog
+from pybricks.robotics import DriveBase
+from pybricks.media.ev3dev import SoundFile, ImageFile
 
 ev3 = EV3Brick()
-motorA = Motor(Port.A)
-motorB = Motor(Port.B)
-left_motor = motorA
-right_motor = motorB
-robot = DriveBase(left_motor, right_motor, wheel_diameter=56, axle_track=152)
-robot.settings(straight_speed=200, straight_acceleration=100, turn_rate=100)
- 
-sensor_cor = ColorSensor(Port.S1)
-sensor_Ir = UltrasonicSensor(Port.S2)
+motor_Dr = Motor(Port.C)
+motor_Es = Motor(Port.B)  
+sensor_Ir = InfraredSensor(Port.S3)
+sensor_corDr = ColorSensor(Port.S1)
+sensor_corEs = ColorSensor(Port.S2)
+
+virarEsquerda = None
+desviar = None
 
 def andar():
-     motorA.run(600)
-     motorB.run(600)
-     return True
+    motor_Es.run(300)
+    motor_Dr.run(300)
 
 def parar():
-     motorA.stop()
-     motorB.stop()
-     return True
+    motor_Dr.stop()
+    motor_Es.stop()
 
-def virarDireita(ativo):
-      ativo = ativo
-      motorA.run(-300)  
-      return ativo
+def virarEsquerda():
+    motor_Es.run_angle(300, 30, then=Stop.HOLD, wait=True)  
 
-def virarEsquerda(ativo):
-      ativo = ativo
-      motorB.run(-300)
-      return ativo
+def virarDireita():
+    motor_Dr.run_angle(300, 30, then=Stop.HOLD, wait=True)    
+
+while desviar == False:
+    andar()
+    
+    distancia = sensor_Ir.distance()
+    if distancia <= 30: 
+        virarEsquerda()
+        virarEsquerda = True
+        if virarEsquerda == True:
+            wait(500)
+            virarDireita()  
+        else:
+            virarEsquerda = False
+            desviar = True
+
+wait(100)  
 
 
 while True:
-     andar()
-     ativo= True
-     distancia = sensor_Ir.distance()
-     print(distancia)
+    corDr = sensor_corDr.color()
+    corEs = sensor_corEs.color()
     
-     
-     if distancia < 30:
-          wait(100)
-          virarDireita(ativo)
-         # if virarDireita(ativo)==True:
-          #   wait(200)
-           #  virarEsquerda(ativo)
-  
+    if corDr == Color.BLACK:
+        andar()
+   
+    else:
+        if corEs == Color.BLACK:
+         parar()
+         virarEsquerda()
+         wait(100)
+         andar() 
+
 wait(100)
-# Here is where your code starts
-
-
