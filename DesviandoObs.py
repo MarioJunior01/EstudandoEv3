@@ -6,7 +6,7 @@ from pybricks.tools import wait
 ev3 = EV3Brick()
 motorA = Motor(Port.A)
 motorB = Motor(Port.B)
-sensor_Ur = UltrasonicSensor(Port.S3)
+sensor_Ir = InfraredSensor(Port.S3)
 sensor_corEs = ColorSensor(Port.S1)
 sensor_corDr = ColorSensor(Port.S2)
 
@@ -71,7 +71,7 @@ def seguirLinha():
         
     
 while True:
-     distanciaObj = sensor_Ur.distance()
+     distanciaObj = sensor_Ir.distance()
      
      if distanciaObj <= 20:
          parar()
