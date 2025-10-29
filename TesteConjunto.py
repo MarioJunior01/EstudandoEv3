@@ -14,7 +14,7 @@ sensor_corDr = ColorSensor(Port.S2)
 velocidade = 300
 velocidade_curva = 200
 distancia_obstaculo = 20
-tempo_verificacao = 10  # ms
+
 
 
 desviando = False
@@ -126,7 +126,7 @@ def seguirLinha():
 
 while True:
     if desviando == False:
-        distanciaObj = sensor_Ir.distance()
+         distanciaObj = sensor_Ir.distance()
         
         if distanciaObj <= distancia_obstaculo:
             parar()
@@ -134,4 +134,4 @@ while True:
         else:
             seguirLinha()
     
-    wait(tempo_verificacao)
+    wait(10)
