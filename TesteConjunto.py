@@ -51,54 +51,54 @@ def curvaSuaveEsquerda():
 def desviarObj():
     global desviando
     desviando = True
-    
+    ev3.screen.draw_text(20, 20, "Entrando no While", text_color=Color.BLACK, background_color=None)
+    ev3.screen.clear()
     ev3.speaker.beep()  
+    while desviando == True:
+     corDr = sensor_corDr.color()
+     corEs = sensor_corEs.color()
+     virarDireita()
+     wait(600)
     
-    virarDireita()
-    wait(600)
-    
-    
-    andar()
-    wait(2000)
-    
-    
-    virarEsquerda()
-    wait(700)
-    
-    
-    andar()
-    wait(2000)
-    
-    virarEsquerda()
-    wait(600)
-   
-    while corEs!= Color.BLACK and  corDr != Color.BLACK:
-       corDr = sensor_corDr.color()
-       corEs = sensor_corEs.color()
-       andar()
-       wait(1000)
-      
-      
+     ev3.screen.draw_text(20, 20, "Cor Branca", text_color=Color.BLACK, background_color=None)
+     andar()
+     wait(2000)
      
-       if corDr == Color.BLACK or corEs == Color.BLACK:
-         ev3.speaker.beep(1000)  
-         main()
-         
-        
- 
+    
+     virarEsquerda()
+     wait(700)
     
     
+     andar()
+     wait(2000)
+     
+     
+     virarEsquerda()
+     wait(800)
+     while corDr != Color.BLACK or corEs != Color.BLACK:
+        andar()
+        corDr = sensor_corDr.color()
+        corEs = sensor_corEs.color()
+        parar()
+        wait(3000)         
+     if corDr == Color.BLACK or corEs == Color.BLACK:
+         ev3.screen.clear()
+         ev3.screen.draw_text(20, 20, "Cor Preta", text_color=Color.BLACK, background_color=None)
+         ev3.speaker.beep(900) 
+         parar()
+         desviando = False
+        break
     
-    andar()
-    wait(2000)
+     andar()
+     wait(1000)
     
-    virarDireita()
-    wait(1000) 
-    
-    andar()
-    
-    
-        
+     virarDireita()
+     wait(1000) 
+
+     andar()
+     
+     wait(1000)
+     desviando = False
 
 def seguirLinha():
      global ultima_correcao 
@@ -134,8 +134,8 @@ def seguirLinha():
     
         parar()
         
-def main ():
- while True:
+
+while True:
     if desviando == False:
          distanciaObj = sensor_Ir.distance()
         
@@ -146,5 +146,3 @@ def main ():
              seguirLinha()
     
     wait(10)
-
-main()
