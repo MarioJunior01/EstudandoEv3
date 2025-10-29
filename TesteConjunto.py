@@ -10,15 +10,15 @@ sensor_Ir = UltrasonicSensor(Port.S3)
 sensor_corEs = ColorSensor(Port.S1)
 sensor_corDr = ColorSensor(Port.S2)
 
-# Configurações ajustáveis
+
 velocidade = 300
 velocidade_curva = 200
 distancia_obstaculo = 20
 tempo_verificacao = 10  # ms
 
-# Controle de estado
+
 desviando = False
-ultima_correcao = "centro"
+
 
 def andar(vel=velocidade):
     motorA.run(vel)
@@ -84,17 +84,13 @@ def desviarObj():
     desviando = False
 
 def seguirLinha():
-    global ultima_correcao
+
     
     corDr = sensor_corDr.color()
     corEs = sensor_corEs.color()
     
-    # Debug no display
-    ev3.screen.clear()
-    ev3.screen.draw_text(10, 10, f"Esq: {corEs}")
-    ev3.screen.draw_text(10, 30, f"Dir: {corDr}")
     
-    # Lógica melhorada de seguimento
+
     if corEs == Color.BLACK and corDr == Color.BLACK:
         # Ambos na linha - seguir reto
         andar()
@@ -129,7 +125,7 @@ def seguirLinha():
         andar()
 
 while True:
-    if not desviando:
+    if desviando == False:
         distanciaObj = sensor_Ir.distance()
         
         if distanciaObj <= distancia_obstaculo:
