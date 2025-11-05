@@ -115,7 +115,7 @@ def seguirLinha():
         parar()
 while True:
     if not desviando:
-        distanciaObj = sensor_Ir.distance() / 10
+        distanciaObj = sensor_Ir.distance()
         
         if distanciaObj <= distancia_obstaculo:
             parar()
