@@ -1,13 +1,15 @@
+#!/usr/bin/env pybricks-micropython
+
 from pybricks.hubs import EV3Brick
 from pybricks.ev3devices import Motor,InfraredSensor,ColorSensor
 from pybricks.parameters import Port, Color
 from pybricks.tools import wait
 
 ev3 = EV3Brick()
-motorA = Motor(Port.A)
+motorA = Motor(Port.C)
 motorB = Motor(Port.B)
 sensor_Ir = InfraredSensor(Port.S3)
-sensor_corEs = ColorSensor(Port.S1)
+sensor_corEs = ColorSensor(Port.S4)
 sensor_corDr = ColorSensor(Port.S2)
 
 
@@ -47,9 +49,6 @@ def curvaSuaveEsquerda():
     motorA.run(velocidade * 0.3)
     motorB.run(velocidade)
     
-def volta():
-    motorA.run(velocidade)
-    motorB.run(100)
     
 def re():
     motorA.run(-velocidade_curva)
@@ -85,23 +84,37 @@ def desviarObj():
 
 def seguirLinha():
      global ultima_correcao 
-     
+     sensorDireitoCor= "Direito"
+     sensor_corEr= "Esquerdo"
      corDr = sensor_corDr.color()
      corEs = sensor_corEs.color()
      if corEs == Color.BLACK and corDr == Color.BLACK:
-       
+        
         andar()
         ultima_correcao = "centro"
-        
+        ev3.screen.draw_text(20,20, ultima_correcao)
+        ev3.screen.clear()
+        ev3.screen.draw_text(20, 20, "Es{}" .format(corEs))
+        ev3.screen.draw_text(40, 30, "Dr{}" .format(corDr))
+
+
      elif corEs == Color.WHITE and corDr == Color.BLACK:
        
         curvaSuaveDireita()
         ultima_correcao = "direita"
+        ev3.screen.draw_text(20,20, ultima_correcao)
+        ev3.screen.clear()
+        ev3.screen.draw_text(20, 20, "Es{}" .format(corEs))
+        ev3.screen.draw_text(40, 30, "Dr{}" .format(corDr))
         
      elif corEs == Color.BLACK and corDr == Color.WHITE:
        
         curvaSuaveEsquerda()
         ultima_correcao = "esquerda"
+        ev3.screen.draw_text(20,20, ultima_correcao)
+        ev3.screen.clear()
+        ev3.screen.draw_text(20, 20, "Es{}" .format(corEs))
+        ev3.screen.draw_text(40, 30, "Dr{}" .format(corDr))
         
      elif corEs == Color.WHITE and corDr == Color.WHITE:
        
@@ -112,7 +125,6 @@ def seguirLinha():
             virarDireita()
             wait(150)
     
-        parar()
 while True:
     if not desviando:
         distanciaObj = sensor_Ir.distance()
