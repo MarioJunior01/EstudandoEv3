@@ -1,5 +1,5 @@
 from pybricks.hubs import EV3Brick
-from pybricks.ev3devices import Motor, ColorSensor, UltrasonicSensor
+from pybricks.ev3devices import Motor,InfraredSensor,ColorSensor
 from pybricks.parameters import Port, Color
 from pybricks.tools import wait
 
