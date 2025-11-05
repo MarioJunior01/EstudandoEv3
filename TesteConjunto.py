@@ -6,7 +6,7 @@ from pybricks.tools import wait
 ev3 = EV3Brick()
 motorA = Motor(Port.A)
 motorB = Motor(Port.B)
-sensor_Ir = UltrasonicSensor(Port.S3)
+sensor_Ir = InfraredSensor(Port.S3)
 sensor_corEs = ColorSensor(Port.S1)
 sensor_corDr = ColorSensor(Port.S2)
 
@@ -52,15 +52,14 @@ def volta():
     motorB.run(100)
     
 def re():
-    motorA.run(-200)
-    motorB.run(-200)
+    motorA.run(-velocidade_curva)
+    motorB.run(-velocidade_curva)
 
 def desviarObj():
      global desviando
      desviando = True
-     motorA.run(-velocidade_curva)
-     motorB.run(-velocidade_curva)
-     wait(500)  # Ré por meio segundo
+     re()
+     wait(500) 
     
     
      virarEsquerda()
