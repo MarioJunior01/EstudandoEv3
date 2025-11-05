@@ -1,13 +1,12 @@
-#!/usr/bin/env pybricks-micropython
 from pybricks.hubs import EV3Brick
-from pybricks.ev3devices import Motor, ColorSensor, InfraredSensor
+from pybricks.ev3devices import Motor, ColorSensor, UltrasonicSensor
 from pybricks.parameters import Port, Color
 from pybricks.tools import wait
 
 ev3 = EV3Brick()
-motorA = Motor(Port.C)
+motorA = Motor(Port.A)
 motorB = Motor(Port.B)
-sensor_Ir = InfraredSensor(Port.S3)
+sensor_Ir = UltrasonicSensor(Port.S3)
 sensor_corEs = ColorSensor(Port.S1)
 sensor_corDr = ColorSensor(Port.S2)
 
@@ -15,11 +14,11 @@ sensor_corDr = ColorSensor(Port.S2)
 velocidade = 300
 velocidade_curva = 200
 distancia_obstaculo = 15
-ultima_correcao="centro"
+tempo_verificacao = 10 
 
 
 desviando = False
-
+ultima_correcao = "centro"
 
 def andar(vel=velocidade):
     motorA.run(vel)
@@ -36,10 +35,10 @@ def virarDireita(vel=velocidade_curva):
 
 def virarEsquerda(vel=velocidade_curva):
     motorB.run(vel)
-    motorA.run(-vel)
+    motorA.run(-vel* 0.3)
 
 def curvaSuaveDireita():
-    
+  
     motorA.run(velocidade)
     motorB.run(velocidade * 0.3)
 
@@ -47,67 +46,49 @@ def curvaSuaveEsquerda():
     
     motorA.run(velocidade * 0.3)
     motorB.run(velocidade)
+    
+def volta():
+    motorA.run(velocidade)
+    motorB.run(100)
+    
+def re():
+    motorA.run(-200)
+    motorB.run(-200)
 
 def desviarObj():
-    global desviando
-    desviando = True
-    ev3.screen.draw_text(20, 20, "Entrando no While", text_color=Color.BLACK, background_color=None)
-    ev3.screen.clear()
-    ev3.speaker.beep()  
-    while desviando == True:
+     global desviando
+     desviando = True
+     motorA.run(-velocidade_curva)
+     motorB.run(-velocidade_curva)
+     wait(500)  # Ré por meio segundo
+    
+    # Passo 2: Girar para esquerda um pouco
+     virarEsquerda()
+     wait(2000)
+    
      corDr = sensor_corDr.color()
      corEs = sensor_corEs.color()
-     virarDireita()
-     wait(600)
-    
-     ev3.screen.draw_text(20, 20, "Cor Branca", text_color=Color.BLACK, background_color=None)
-     andar()
-     wait(2000)
-     
-    
-     virarEsquerda()
-     wait(700)
-    
-    
-     andar()
-     wait(2000)
-     
-     
-     virarEsquerda()
-     wait(800)
      while corDr != Color.BLACK or corEs != Color.BLACK:
-        andar()
-        corDr = sensor_corDr.color()
-        corEs = sensor_corEs.color()
-        parar()
-        wait(3000)         
-     if corDr == Color.BLACK or corEs == Color.BLACK:
-         ev3.screen.clear()
-         ev3.screen.draw_text(20, 20, "Cor Preta", text_color=Color.BLACK, background_color=None)
-         ev3.speaker.beep(900) 
-         parar()
-         desviando = False
-        break
-    
-     andar()
-     wait(1000)
-    
-     virarDireita()
-     wait(1000) 
-
-     andar()
-     
-     wait(1000)
-     desviando = False
+         motorA.run(velocidade)        # Roda esquerda mais rápida
+         motorB.run(velocidade * 0.6)  # Roda direita mais lenta
+         wait(100) 
+        
+        # Atualizar leitura dos sensores
+         corDr = sensor_corDr.color()
+         corEs = sensor_corEs.color()
+        
+        # Verificar se encontrou a linha preta
+         if corDr == Color.BLACK or corEs == Color.BLACK:
+             parar()
+             desviando = False
+             break
+     parar()
 
 def seguirLinha():
      global ultima_correcao 
      
      corDr = sensor_corDr.color()
      corEs = sensor_corEs.color()
-    
-    
-
      if corEs == Color.BLACK and corDr == Color.BLACK:
        
         andar()
@@ -133,16 +114,14 @@ def seguirLinha():
             wait(150)
     
         parar()
-        
-
 while True:
-    if desviando == False:
-         distanciaObj = sensor_Ir.distance()
+    if not desviando:
+        distanciaObj = sensor_Ir.distance() / 10
         
-         if distanciaObj <= distancia_obstaculo:
-             parar()
-             desviarObj()
-         else:
-             seguirLinha()
+        if distanciaObj <= distancia_obstaculo:
+            parar()
+            desviarObj()
+        else:
+            seguirLinha()
     
-    wait(10)
+    wait(tempo_verificacao)
