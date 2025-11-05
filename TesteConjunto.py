@@ -62,7 +62,7 @@ def desviarObj():
      motorB.run(-velocidade_curva)
      wait(500)  # Ré por meio segundo
     
-    # Passo 2: Girar para esquerda um pouco
+    
      virarEsquerda()
      wait(2000)
     
@@ -73,11 +73,11 @@ def desviarObj():
          motorB.run(velocidade * 0.6)  # Roda direita mais lenta
          wait(100) 
         
-        # Atualizar leitura dos sensores
+
          corDr = sensor_corDr.color()
          corEs = sensor_corEs.color()
         
-        # Verificar se encontrou a linha preta
+
          if corDr == Color.BLACK or corEs == Color.BLACK:
              parar()
              desviando = False
