@@ -14,7 +14,7 @@ sensor_corDr = ColorSensor(Port.S2)
 velocidade = 300
 velocidade_curva = 200
 distancia_obstaculo = 15
-tempo_verificacao = 10 
+
 
 
 desviando = False
@@ -123,4 +123,4 @@ while True:
         else:
             seguirLinha()
     
-    wait(tempo_verificacao)
+    wait(10)
