@@ -41,11 +41,11 @@ def virarEsquerda(vel=velocidade_curva):
 def curvaSuaveDireita():
     
     motorA.run(velocidade)
-    motorB.run(-velocidade * 0.1)
+    motorB.run(-velocidade * 0.2)
 
 def curvaSuaveEsquerda():
     
-    motorA.run(-velocidade * 0.1)
+    motorA.run(-velocidade * 0.2)
     motorB.run(velocidade)
 
 def re():
@@ -79,7 +79,7 @@ def desviarObj():
                  andar()
                  wait(200) 
                  virarEsquerda()
-                 wait(200)
+                 wait(1000)
 
                  desviando = False
                  break
