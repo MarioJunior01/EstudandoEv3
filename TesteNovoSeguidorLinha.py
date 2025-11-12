@@ -4,7 +4,7 @@ from pybricks.ev3devices import Motor, ColorSensor, InfraredSensor
 from pybricks.parameters import Port, Color
 from pybricks.tools import wait
 
-# Inicialização
+
 ev3 = EV3Brick()
 motorA = Motor(Port.A)
 motorB = Motor(Port.B)
@@ -12,7 +12,7 @@ sensor_Ir = InfraredSensor(Port.S3)
 sensor_corEs = ColorSensor(Port.S1)
 sensor_corDr = ColorSensor(Port.S2)
 
-# Parâmetros
+
 velocidade = 300
 velocidade_curva = 200
 distancia_obstaculo = 5
@@ -94,7 +94,7 @@ def seguirLinha():
     erro_abs = abs(erro)
 
     # PID clássico
-    proporcional = erro
+    proporcional = erro 
     integral += erro
     derivativo = erro - erro_anterior
     erro_anterior = erro
@@ -107,9 +107,9 @@ def seguirLinha():
 
     # Ajusta ganhos do PID dinamicamente
     # Quanto maior o erro, mais forte a correção (Kp e Kd aumentam)
-    Kp = 1.2 + (erro_abs * 0.05)   # aumenta conforme curva
-    Ki = 0.001                     # pequeno para evitar acumulação
-    Kd = 0.08 + (erro_abs * 0.02)
+    Kp = 1.2 + (erro_abs * 0.05)   # aumenta conforme curva basicamente é a força da curva
+    Ki = 0.001                     # pequeno para evitar acumulação ou seja ele tenta estabilizar na linha
+    Kd = 0.08 + (erro_abs * 0.02)  # deixa o movimento mais suave 
 
     # Calcula correção PID
     correcao = Kp * proporcional + Ki * integral + Kd * derivativo
