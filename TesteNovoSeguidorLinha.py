@@ -15,7 +15,7 @@ sensor_corDr = ColorSensor(Port.S2)
 # Parâmetros
 velocidade = 300
 velocidade_curva = 200
-distancia_obstaculo = 10
+distancia_obstaculo = 5
 desviando = False
 
 # PID variáveis globais
@@ -23,7 +23,7 @@ integral = 0
 erro_anterior = 0
 
 # Calibração simples
-PRETO = 5
+PRETO = 10
 BRANCO = 90
 ALVO = (PRETO + BRANCO) / 2
 
@@ -85,9 +85,12 @@ def seguirLinha():
     # Lê valores de reflexão dos sensores (0 = preto, 100 = branco)
     corDr = sensor_corDr.reflection()
     corEs = sensor_corEs.reflection()
-
-    # Calcula erro (diferença entre sensores)
-    erro = corEs - corDr
+     
+    erroEs = corEs-ALVO
+    erroDr = corDr - ALVO
+    
+    # Calcula erro (diferença entre os erros dos sensores em relacao ao alvo)
+    erro = erroEs - erroDr
     erro_abs = abs(erro)
 
     # PID clássico
@@ -104,7 +107,7 @@ def seguirLinha():
 
     # Ajusta ganhos do PID dinamicamente
     # Quanto maior o erro, mais forte a correção (Kp e Kd aumentam)
-    Kp = 1.2 + (erro_abs * 0.03)   # aumenta conforme curva
+    Kp = 1.2 + (erro_abs * 0.05)   # aumenta conforme curva
     Ki = 0.001                     # pequeno para evitar acumulação
     Kd = 0.08 + (erro_abs * 0.02)
 
@@ -123,6 +126,7 @@ def seguirLinha():
     motorA.run(velA)
     motorB.run(velB)
 
+# Loop principal
 while True:
     if not desviando:
         distanciaObj = sensor_Ir.distance() 
