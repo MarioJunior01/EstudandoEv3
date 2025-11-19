@@ -45,6 +45,16 @@ def virarEsquerda(vel=velocidade_curva):
     motorB.run(vel)
     motorA.run(-vel)
 
+def curvaSuaveDireita():
+    
+    motorA.run(velocidade)
+    motorB.run(-velocidade * 0.2)
+
+def curvaSuaveEsquerda():
+    
+    motorA.run(-velocidade * 0.2)
+    motorB.run(velocidade)
+
 def re():
     motorA.run(-velocidade_curva)
     motorB.run(-velocidade_curva)
