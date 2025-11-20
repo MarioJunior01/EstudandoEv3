@@ -6,8 +6,8 @@ from pybricks.tools import wait
 
 
 ev3 = EV3Brick()
-motorA = Motor(Port.A)
-motorB = Motor(Port.B)
+motorDr = Motor(Port.B)
+motorEs = Motor(Port.C)
 sensor_Ir = InfraredSensor(Port.S3)
 sensor_corEs = ColorSensor(Port.S1)
 sensor_corDr = ColorSensor(Port.S2)
@@ -29,50 +29,43 @@ ALVO = (PRETO + BRANCO) / 2
 
 
 def andar(vel=velocidade):
-    motorA.run(vel)
-    motorB.run(vel)
+    motorDr.run(vel)
+    motorEs.run(vel)
 
 def parar():
-    motorA.stop()
-    motorB.stop()
+    motorDr.stop()
+    motorEs.stop()
     wait(200)
-
+def curvaSuaveDireita(vel=velocidade):
+    motorDr.run(vel)
+    motorEs.run(-vel*0.02)
+def curvaSuaveEsquerda(vel=velocidade):
+    motorDr.run(-vel*0.02)
+    motorEs.run(vel)
 def virarDireita(vel=velocidade_curva):
-    motorA.run(vel)
-    motorB.run(-vel)
+    motorEs.run(-vel)
+    motorDr.run(vel)
 
 def virarEsquerda(vel=velocidade_curva):
-    motorB.run(vel)
-    motorA.run(-vel)
-
-def curvaSuaveDireita():
-    
-    motorA.run(velocidade)
-    motorB.run(-velocidade * 0.2)
-
-def curvaSuaveEsquerda():
-    
-    motorA.run(-velocidade * 0.2)
-    motorB.run(velocidade)
+    motorEs.run(vel)
+    motorDr.run(-vel)
 
 def re():
-    motorA.run(-velocidade_curva)
-    motorB.run(-velocidade_curva)
+    motorDr.run(-velocidade_curva)
+    motorEs.run(-velocidade_curva)
 
 # Desviar obstáculo
 def desviarObj():
-    global desviando
-    desviando = True
     re()
     wait(500)
-    virarEsquerda()
+    virarDireita()
     wait(1300)
     
     corDr = sensor_corDr.color()
     corEs = sensor_corEs.color()
     while corDr != Color.BLACK or corEs != Color.BLACK:
-        motorA.run(velocidade)        
-        motorB.run(velocidade * 0.6)
+        motorEs.run(velocidade)        
+        motorDr.run(velocidade * 0.6)
         wait(100)
         corDr = sensor_corDr.color()
         corEs = sensor_corEs.color()
@@ -83,8 +76,8 @@ def desviarObj():
             ev3.speaker.beep(400)
             andar()
             wait(200)
-            virarEsquerda()
-            wait(1000)
+            curvaSuaveDireita()
+            wait(1500)
             desviando = False
             break
 
@@ -117,7 +110,7 @@ def seguirLinha():
 
     # Ajusta ganhos do PID dinamicamente
     # Quanto maior o erro, mais forte a correção (Kp e Kd aumentam)
-    Kp = 1.2 + (erro_abs * 0.05)   # aumenta conforme curva basicamente é a força da curva
+    Kp = 1.2 + (erro_abs * 0.03)   # aumenta conforme curva basicamente é a força da curva
     Ki = 0.001                     # pequeno para evitar acumulação ou seja ele tenta estabilizar na linha
     Kd = 0.08 + (erro_abs * 0.02)  # deixa o movimento mais suave 
 
@@ -128,21 +121,19 @@ def seguirLinha():
     velA = vel_base + correcao
     velB = vel_base - correcao
 
-    # Limita velocidades para segurança
+
     velA = max(-400, min(400, velA))
     velB = max(-400, min(400, velB))
 
-    # Executa motores
-    motorA.run(velA)
-    motorB.run(velB)
+    motorDr.run(velA)
+    motorEs.run(velB)
 
-# Loop principal
+
 while True:
-    if not desviando:
-        distanciaObj = sensor_Ir.distance() 
-        if distanciaObj <= distancia_obstaculo:
-            parar()
-            desviarObj()
-        else:
-            seguirLinha()
-    wait(10)
+    distanciaObj = sensor_Ir.distance() 
+    if distanciaObj <= distancia_obstaculo:
+        parar()
+        desviarObj()
+    else:
+        seguirLinha()
+    wait(10) 
