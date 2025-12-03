@@ -56,30 +56,30 @@ def re():
 
 # Desviar obstáculo
 def desviarObj():
-    re()
-    wait(500)
-    virarDireita()
-    wait(1300)
-    
-    corDr = sensor_corDr.color()
-    corEs = sensor_corEs.color()
-    while corDr != Color.BLACK or corEs != Color.BLACK:
-        motorEs.run(velocidade)        
-        motorDr.run(velocidade * 0.6)
-        wait(100)
-        corDr = sensor_corDr.color()
-        corEs = sensor_corEs.color()
-        
-        if corDr == Color.BLACK or corEs == Color.BLACK:
-            parar()
-            wait(500)
-            ev3.speaker.beep(400)
-            andar()
-            wait(200)
-            curvaSuaveDireita()
-            wait(1500)
-            desviando = False
-            break
+     re()
+     wait(500)
+     virarDireita()
+     wait(1300)
+
+     corDr = sensor_corDr.reflection()
+     corEs = sensor_corEs.reflection()
+     while corDr != ALVO and corEs != ALVO:
+           motorEs.run(velocidade)
+           motorDr.run(velocidade * 0.6)
+           wait(100)
+           corDr = sensor_corDr.reflection()
+           corEs = sensor_corEs.reflection()
+
+           if corDr <= ALVO or corEs <= ALVO:
+                     parar()
+                     wait(500)
+                     ev3.speaker.beep(400)
+                     andar()
+                     wait(200)
+                     curvaSuaveDireita()
+                     wait(1500)
+                     desviando = False
+                     break
 
 # Seguir linha com PID
 def seguirLinha():
