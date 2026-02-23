@@ -89,6 +89,7 @@ IFMS – Campus Ponta Porã
 * [@MarioJunior01](https://github.com/MarioJunior01)
 * [@AdhanFLB0](https://github.com/AdhanFLB0)
 * [@MelissaRds](https://github.com/MelissaRds)
+* [@Garibaldo5020](https://github.com/Garibaldo5020)
 
 ---
 ## 📊 Status do Repositório
