@@ -91,7 +91,14 @@ IFMS – Campus Ponta Porã
 * [@MelissaRds](https://github.com/MelissaRds)
 
 ---
+## 📊 Status do Repositório
 
+![Último commit](https://img.shields.io/github/last-commit/MarioJunior01/RoboAndromeda)
+![Issues abertas](https://img.shields.io/github/issues/MarioJunior01/RoboAndromeda)
+![PRs abertas](https://img.shields.io/github/issues-pr/MarioJunior01/RoboAndromeda)
+
+
+---
 <p align="center">
 🏆 Projeto desenvolvido para fins educacionais e competitivos.
 </p>
