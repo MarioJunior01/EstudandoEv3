@@ -1,27 +1,109 @@
-🤖 Robô Seguidor de Linha – OBR
 
-Projeto de robô autônomo desenvolvido pelo IFMS – Campus Ponta Porã, pela equipe Andrômeda, para participação na Olimpíada Brasileira de Robótica (OBR) – modalidade prática.
+---
 
-🎯 Objetivo
+# 🤖 Robô Seguidor de Linha – OBR
 
-Seguir uma linha preta sobre fundo branco de forma autônoma, realizando curvas e correções com precisão conforme as regras da competição.
+Projeto desenvolvido pela equipe **Andrômeda**, do **IFMS – Campus Ponta Porã**, para participação na **Olimpíada Brasileira de Robótica (OBR)** – modalidade prática.
 
-⚙️ Funcionamento
+---
 
-O robô utiliza sensores para identificar a posição da linha e ajusta automaticamente os motores para manter o trajeto.
-Pode utilizar controle PID para maior estabilidade e precisão.
+## 📊 Progresso do Projeto
 
-👨‍💻 Equipe
+**Status Geral:** 60% concluído
 
-Andrômeda
+```
+[██████████████░░░░░░░░] 60%
+```
+
+### ✔ Concluído
+
+* Seguidor de linha com PID
+* Desvio de obstáculos
+
+### 🔄 Em desenvolvimento
+
+* Rampa
+* Gangorra
+* Redutores
+* Sala 3
+* Passagem estreita
+
+---
+
+## 🎯 Objetivo do Projeto
+
+Construir um robô autônomo capaz de cumprir os desafios da pista oficial da OBR, incluindo:
+
+* ✅ Seguir linha preta com precisão
+* ✅ Desviar de obstáculos
+* 🔄 Superar rampas (subida e descida)
+* 🔄 Atravessar gangorra
+* 🔄 Passar por redutores
+* 🔄 Realizar desafios da Sala 3 (resgate)
+* 🔄 Passar por trechos estreitos
+
+---
+
+## 🚀 Funcionalidades Já Implementadas
+
+### 🔹 Seguidor de Linha com PID
+
+* Correção automática de trajetória
+* Curvas de 90°
+* Identificação de marcações verdes
+
+### 🔹 Desvio de Obstáculos
+
+* Detecção com sensor de distância
+* Retorno controlado para a linha
+
+---
+
+## 🔧 Estratégias em Desenvolvimento
+
+### 🔹 Rampa
+
+* Controle de potência na subida
+* Estabilidade na descida
+
+### 🔹 Gangorra
+
+* Ajuste de equilíbrio e estabilidade
+
+### 🔹 Redutores
+
+* Estratégia simples de desaceleração
+
+### 🔹 Sala 3
+
+* Entrada estratégica
+* Mapeamento dos cantos
+* Resgate da vítima
+
+### 🔹 Passagem Estreita
+
+* Ajuste do tamanho e alinhamento do robô
+
+---
+
+## 👨‍💻 Equipe
+
+**Andrômeda**
 IFMS – Campus Ponta Porã
 
-👨‍💻 Desenvolvedores
+### 👩‍💻 Desenvolvedores
 
-@MarioJunior01
+* [@MarioJunior01](https://github.com/MarioJunior01)
+* [@AdhanFLB0](https://github.com/AdhanFLB0)
+* [@MelissaRds](https://github.com/MelissaRds)
 
-@AdhanFLB0
+---
 
-@MelissaRds
+<p align="center">
+🏆 Projeto desenvolvido para fins educacionais e competitivos.
+</p>
 
-Projeto desenvolvido para fins educacionais e competitivos 🏆
+---
+
+
+
