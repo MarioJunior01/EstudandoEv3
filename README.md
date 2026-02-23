@@ -7,13 +7,6 @@ Projeto desenvolvido pela equipe **Andrômeda**, do **IFMS – Campus Ponta Por�
 
 ---
 
-## 📊 Progresso do Projeto
-
-**Status Geral:** 60% concluído
-
-```
-[██████████████░░░░░░░░] 60%
-```
 
 ### ✔ Concluído
 
