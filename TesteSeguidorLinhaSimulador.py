@@ -110,9 +110,9 @@ def seguirLinha():
 
     # Ajusta ganhos do PID dinamicamente
     # Quanto maior o erro, mais forte a correção (Kp e Kd aumentam)
-    Kp = 1.2 + (erro_abs * 0.03)   # aumenta conforme curva basicamente é a força da curva
-    Ki = 0.001                     # pequeno para evitar acumulação ou seja ele tenta estabilizar na linha
-    Kd = 0.08 + (erro_abs * 0.02)  # deixa o movimento mais suave 
+    Kp = 1.5 + (erro_abs * 0.09)   # aumenta conforme curva basicamente é a força da curva
+    Ki = 0.005                     # pequeno para evitar acumulação ou seja ele tenta estabilizar na linha
+    Kd = 0.1 + (erro_abs * 0.09)  # deixa o movimento mais suave 
 
     # Calcula correção PID
     correcao = Kp * proporcional + Ki * integral + Kd * derivativo
